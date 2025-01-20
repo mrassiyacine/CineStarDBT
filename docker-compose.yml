@@ -13,5 +13,45 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./data:/docker-entrypoint-initdb.d
+    networks:
+      - cine_network
+  dbt_service:
+    image: ghcr.io/dbt-labs/dbt-postgres:latest
+    container_name: dbt_service
+    working_dir: /dbt
+    entrypoint: ["tail", "-f", "/dev/null"]
+    environment:
+      DBT_PROFILES_DIR: /dbt
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    user: "${UID}:${GID}"
+    volumes:
+      - ./dbt:/dbt
+    networks:
+      - cine_network
+    depends_on:
+      - postgres
+  metabase_service:
+    image: metabase/metabase:latest
+    container_name: metabase_service
+    ports:
+      - "3000:3000"
+    environment:
+      MB_DB_TYPE: postgres
+      MB_DB_DBNAME: ${POSTGRES_DB}
+      MB_DB_PORT: 5432
+      MB_DB_USER: ${POSTGRES_USER}
+      MB_DB_PASS: ${POSTGRES_PASSWORD}
+      MB_DB_HOST: postgres
+    networks:
+      - cine_network
+    depends_on:
+      - postgres
+
+
+networks:
+  cine_network:
+    driver: bridge
 volumes:
   postgres_data: {}
