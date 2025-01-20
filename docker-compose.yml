@@ -18,10 +18,10 @@ services:
   dbt_service:
     image: ghcr.io/dbt-labs/dbt-postgres:latest
     container_name: dbt_service
-    working_dir: /dbt
+    working_dir: /dbt/dbt_modelling
     entrypoint: ["tail", "-f", "/dev/null"]
     environment:
-      DBT_PROFILES_DIR: /dbt
+      DBT_PROFILES_DIR: /dbt/dbt_modelling
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}

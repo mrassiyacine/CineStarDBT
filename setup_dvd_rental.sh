@@ -26,9 +26,9 @@ docker-compose up -d dbt_service
 
 echo "Running dbt..."
 
-docker exec -it dbt_service dbt run > /dev/null 2>&1;
+docker exec -it dbt_service dbt run;
 
-docker exec -it dbt_service dbt test > /dev/null 2>&1;
+docker exec -it dbt_service dbt test;
 
 echo "Starting the Metabase service..."
 

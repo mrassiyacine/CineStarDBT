@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: monthly_rental_trends
+    columns:
+      - name: month_of_year
+      - name: rental_count
+
+  - name: rental_duration_analysis
+    columns:
+      - name: duration_range
+      - name: rental_count
+
+  - name: most_profitable_categories
+    columns:
+      - name: category
+      - name: profit
+
+  - name: customer_segmentation_by_rental_freq
+    columns:
+      - name: segment
+      - name: customer_count
